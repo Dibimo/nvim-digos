@@ -3,6 +3,9 @@ return {
   -- Mason (Gerenciador de LSP servers)
   {
     "williamboman/mason.nvim",
+    cmd = "Mason",
+    keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
+    build = ":MasonUpdate",
     config = function()
       require("mason").setup({
         ui = {
@@ -16,46 +19,29 @@ return {
     end,
   },
 
-  -- Mason LSP Config (Ponte entre Mason e lspconfig)
-  {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim" },
-    config = function()
-      require("mason-lspconfig").setup({
-        -- LSP servers que serão instalados automaticamente
-        ensure_installed = {
-          "lua_ls",        -- Lua
-          "pyright",       -- Python
-          "tsserver",      -- TypeScript/JavaScript
-          "html",          -- HTML
-          "cssls",         -- CSS
-          "jsonls",        -- JSON
-          "yamlls",        -- YAML
-          "bashls",        -- Bash
-          "marksman",      -- Markdown
-        },
-        automatic_installation = true,
-      })
-    end,
-  },
-
-  -- LSP Config (Configuração dos language servers)
+  -- LSP Config (SEM mason-lspconfig)
   {
     "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp", -- Para integração com autocompletion
+      "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-      local lspconfig = require("lspconfig")
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      -- Configurar capabilities para autocompletion
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      
+      -- Tentar carregar cmp_nvim_lsp se estiver disponível
+      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      if has_cmp then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
 
-      -- Função para configuração padrão
-      local function on_attach(client, bufnr)
+      -- Função on_attach
+      local on_attach = function(client, bufnr)
         local opts = { buffer = bufnr, silent = true }
 
-        -- Keymaps para LSP
+        -- LSP Keymaps
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
@@ -64,85 +50,69 @@ return {
         vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-        vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, opts)
+        vim.keymap.set("n", "<leader>lf", function() vim.lsp.buf.format({ async = true }) end, opts)
         vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-        vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
       end
 
-      -- Configuração automática para todos os LSP servers
-      require("mason-lspconfig").setup_handlers({
-        -- Handler padrão
-        function(server_name)
-          lspconfig[server_name].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-          })
-        end,
+      -- Configuração manual dos servers (SEM automatização)
+      local lspconfig = require("lspconfig")
 
-        -- Configurações específicas por servidor
-        ["lua_ls"] = function()
-          lspconfig.lua_ls.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-              Lua = {
-                runtime = {
-                  version = "LuaJIT"
-                },
-                diagnostics = {
-                  globals = { "vim" }
-                },
-                workspace = {
-                  library = vim.api.nvim_get_runtime_file("", true),
-                  checkThirdParty = false,
-                },
-                telemetry = {
-                  enable = false,
-                },
-              },
+      -- Lua Language Server
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = { version = "LuaJIT" },
+            diagnostics = { globals = { "vim" } },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
             },
-          })
-        end,
-
-        ["pyright"] = function()
-          lspconfig.pyright.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-              python = {
-                analysis = {
-                  typeCheckingMode = "basic",
-                  autoSearchPaths = true,
-                  useLibraryCodeForTypes = true,
-                }
-              }
-            }
-          })
-        end,
-
-        ["tsserver"] = function()
-          lspconfig.tsserver.setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = {
-              typescript = {
-                inlayHints = {
-                  includeInlayParameterNameHints = 'all',
-                  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                  includeInlayFunctionParameterTypeHints = true,
-                  includeInlayVariableTypeHints = true,
-                  includeInlayPropertyDeclarationTypeHints = true,
-                  includeInlayFunctionLikeReturnTypeHints = true,
-                  includeInlayEnumMemberValueHints = true,
-                }
-              }
-            }
-          })
-        end,
+            telemetry = { enable = false },
+          },
+        },
       })
 
+      -- Python
+      lspconfig.pyright.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- TypeScript/JavaScript
+      lspconfig.ts_ls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- HTML
+      lspconfig.html.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- CSS
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- JSON
+      lspconfig.jsonls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- Bash
+      lspconfig.bashls.setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+      })
+
+      -- Configuração dos diagnósticos
       vim.diagnostic.config({
         virtual_text = {
           prefix = "●",
@@ -155,11 +125,10 @@ return {
           style = "minimal",
           border = "rounded",
           source = "always",
-          header = "",
-          prefix = "",
         },
       })
 
+      -- Ícones dos diagnósticos
       local signs = { Error = " ", Warn = " ", Hint = "󰌶 ", Info = " " }
       for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
