@@ -17,3 +17,9 @@ opt.hlsearch = false
 opt.wrap = false
 opt.termguicolors = true
 opt.mouse = "a"
+
+opt.timeout = true
+opt.timeoutlen = 500
+opt.ttimeout = true
+opt.ttimeoutlen = 0
+
