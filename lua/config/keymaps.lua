@@ -3,7 +3,7 @@ local keymap = vim.keymap.set
 vim.g.mapleader = " "
 
 
-keymap("n", "<leader>w", "<cmd>Neovim Write<cr>", { desc = "Salva o meu arquivo atual" })
+keymap("n", "<leader>w", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
 
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 keymap("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Find word" })
