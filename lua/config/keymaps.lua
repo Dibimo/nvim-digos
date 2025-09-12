@@ -4,6 +4,7 @@ vim.g.mapleader = " "
 
 
 keymap("n", "<leader>w", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
+keymap("n", "<leader>wa", "<cmd>wa<cr> ", { desc = "Salva o meu arquivo atual" })
 
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 keymap("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Find word" })
