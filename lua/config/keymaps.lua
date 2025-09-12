@@ -18,3 +18,17 @@ keymap("n", "<leader>fe", "<cmd>Neotree filesystem<cr>", { desc = "Filesystem ex
 keymap("n", "<leader>fb", "<cmd>Neotree buffers<cr>", { desc = "Buffer explorer" })
 keymap("n", "<leader>fg", "<cmd>Neotree git_status<cr>", { desc = "Git status explorer" })
 
+
+-- Navegação entre buffers
+keymap("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
+keymap("n", "[b", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+keymap("n", "<leader>c", "<cmd>bdelete<cr>", { desc = "Close buffer" })
+
+-- Navegação entre janelas
+keymap("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
+keymap("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
+keymap("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
+keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
+
+-- Clear search highlight
+keymap("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
