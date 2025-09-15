@@ -75,6 +75,8 @@ return {
           },
         },
       })
+      --emmet
+      lspconfig.emmet_language_server.setup({})
 
       -- Python
       lspconfig.pyright.setup({
