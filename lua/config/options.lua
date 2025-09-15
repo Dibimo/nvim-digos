@@ -25,3 +25,8 @@ opt.timeoutlen = 500
 opt.ttimeout = true
 opt.ttimeoutlen = 0
 
+-- Remover espaços em branco a direita 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern="*",
+  command="%s/\\s\\+$//e",
+})
