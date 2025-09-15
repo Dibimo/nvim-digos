@@ -21,8 +21,8 @@ keymap("n", "<leader>fg", "<cmd>Neotree git_status<cr>", { desc = "Git status ex
 
 
 -- Navegação entre buffers
-keymap("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
-keymap("n", "[b", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+keymap("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
+keymap("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 keymap("n", "<leader>c", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 
 -- Navegação entre janelas
