@@ -17,12 +17,22 @@ return {
     -- use opts = {} for passing setup options
     -- this is equivalent to setup({}) function
   },
+  --
+  -- temas
   {
     "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
     opts = {},
   },
+  {
+    "shaunsingh/nord.nvim",
+    options = {
+      theme = 'nord'
+    }
+  },
+  --fim temas
+  --
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
