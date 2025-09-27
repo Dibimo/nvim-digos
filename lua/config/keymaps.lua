@@ -3,7 +3,7 @@ local keymap = vim.keymap.set
 vim.g.mapleader = " "
 
 
-keymap("n", "<leader>w", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
+keymap("n", "<leader>fs", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
 keymap("n", "<leader>wa", "<cmd>wa<cr> ", { desc = "Salva o meu arquivo atual" })
 
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
@@ -21,8 +21,8 @@ keymap("n", "<leader>fg", "<cmd>Neotree git_status<cr>", { desc = "Git status ex
 
 
 -- Navegação entre buffers
-keymap("n", "<leader>bn", "<cmd>bnext<cr>", { desc = "Next buffer" })
-keymap("n", "<leader>bp", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
+keymap("n", "<leader>bb", "<cmd>bnext<cr>", { desc = "Next buffer" })
+keymap("n", "<leader>BB", "<cmd>bprevious<cr>", { desc = "Previous buffer" })
 keymap("n", "<leader>c", "<cmd>bdelete<cr>", { desc = "Close buffer" })
 
 -- Navegação entre janelas
@@ -33,3 +33,9 @@ keymap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Clear search highlight
 keymap("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
+
+-- Sessions
+keymap("n", "<leader>qs", function() require("persistence").save() end, { desc = "Save session" })
+keymap("n", "<leader>ql", function() require("persistence").load() end, { desc = "Load session" })
+keymap("n", "<leader>qd", function() require("persistence").stop() end, { desc = "Stop persistence" })
+keymap("n", "<leader>qr", function() require("persistence").load({ last = true }) end, { desc = "Restore last session" })
