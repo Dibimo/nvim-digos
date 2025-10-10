@@ -1,5 +1,9 @@
 local opt = vim.opt
 
+-- opt.spell = true
+-- opt.spelllang = { 'pt_br', 'en_us' }
+opt.spellsuggest = "best,9"  -- Mostrar até 9 sugestões
+
 opt.number = true
 opt.relativenumber = true
 opt.signcolumn = "yes"
@@ -30,6 +34,8 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern="*",
   command="%s/\\s\\+$//e",
 })
+
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown", "text", "gitcommit" },
   callback = function()
