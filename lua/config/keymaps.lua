@@ -6,6 +6,7 @@ vim.g.mapleader = " "
 keymap("n", "<leader>fs", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
 keymap("n", "<leader>wa", "<cmd>wa<cr> ", { desc = "Salva o meu arquivo atual" })
 
+keymap("n", "<leader>fd", "<cmd>Telescope diagnostics<cr>", { desc = "Find files" })
 keymap("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Find files" })
 keymap("n", "<leader>fw", "<cmd>Telescope live_grep<cr>", { desc = "Find word" })
 keymap("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers" })
@@ -39,3 +40,11 @@ keymap("n", "<leader>qs", function() require("persistence").save() end, { desc =
 keymap("n", "<leader>ql", function() require("persistence").load() end, { desc = "Load session" })
 keymap("n", "<leader>qd", function() require("persistence").stop() end, { desc = "Stop persistence" })
 keymap("n", "<leader>qr", function() require("persistence").load({ last = true }) end, { desc = "Restore last session" })
+
+
+
+keymap("n", "<leader>ss", "<cmd>set spell!<cr>", { desc = "Toggle spell check" })
+keymap("n", "<leader>sn", "]s", { desc = "Next spelling error" })
+keymap("n", "<leader>sp", "[s", { desc = "Previous spelling error" })
+keymap("n", "<leader>sa", "zg", { desc = "Add word to dictionary" })
+keymap("n", "<leader>s?", "z=", { desc = "Spelling suggestions" })
