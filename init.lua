@@ -3,7 +3,6 @@ require("config.options")
 require("config.lazy")
 require("config.colorscheme")
 require("config.spell")
-require("config.mason")
 
 vim.cmd [[
   highlight Normal guibg=none
