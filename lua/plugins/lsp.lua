@@ -8,6 +8,10 @@ return {
     build = ":MasonUpdate",
     config = function()
       require("mason").setup({
+        registires = {
+          "github:mason-org/mason-registry",
+          "github:Crashdummyy/mason-registry",
+        },
         ui = {
           icons = {
             package_installed = "✓",
