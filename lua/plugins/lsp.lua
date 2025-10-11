@@ -87,7 +87,13 @@ return {
       -- Emmet Language Server
       vim.lsp.config('emmet_language_server', {
         cmd = { 'emmet-language-server', '--stdio' },
-        filetypes = { 'html', 'css', 'javascriptreact', 'typescriptreact' },
+        filetypes = {
+          'html',
+          'css',
+          'javascriptreact',
+          'typescriptreact',
+          'vue'
+        },
         root_markers = { '.git', 'package.json' },
       })
 
@@ -118,7 +124,8 @@ return {
           'javascript',
           'javascriptreact',
           'typescript',
-          'typescriptreact'
+          'typescriptreact',
+          'vue'
         },
         root_markers = {
           'tsconfig.json',
@@ -126,6 +133,16 @@ return {
           'package.json',
           '.git'
         },
+        init_options = {
+          plugins = {
+            {
+              name = "@vue/typescript-plugin",
+              location = vim.fn.stdpath('data') ..
+                '/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin',
+              languages = { "vue" }
+            }
+          }
+        }
       })
 
       -- HTML (precisa de snippet support)
@@ -176,6 +193,27 @@ return {
         root_markers = { '.git' },
       })
 
+      vim.lsp.config("roslyn", {
+        on_attach = function()
+          print("This will run when the server attaches!")
+        end,
+        settings = {
+          ["csharp|inlay_hints"] = {
+            csharp_enable_inlay_hints_for_implicit_object_creation = true,
+            csharp_enable_inlay_hints_for_implicit_variable_types = true,
+          },
+          ["csharp|code_lens"] = {
+            dotnet_enable_references_code_lens = true,
+          },
+        },
+      })
+
+      vim.lsp.config('vue_ls', {
+        cmd = { 'vue-language-server', '--stdio' },
+        filetypes = { 'vue' },
+        root_markers = { 'package.json' },
+      })
+
       vim.lsp.enable({
         'lua_ls',
         'emmet_language_server',
@@ -185,6 +223,9 @@ return {
         'cssls',
         'jsonls',
         'bashls',
+        'omnisharp',
+        'vue-language-server',
+        'vue_ls'
       })
 
       vim.diagnostic.config({
