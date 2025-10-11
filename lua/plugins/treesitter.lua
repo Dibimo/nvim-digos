@@ -29,22 +29,23 @@ return {
           "regex",
           "gitignore",
           "dockerfile",
+          "c_sharp"
         },
-        
+
         -- Instalar parsers automaticamente quando entrar em novo filetype
         auto_install = true,
-        
+
         -- Syntax highlighting
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
-        
+
         -- Indentação automática
         indent = {
           enable = true,
         },
-        
+
         -- Incrementtal selection
         incremental_selection = {
           enable = true,
@@ -55,7 +56,7 @@ return {
             node_decremental = "<bs>",
           },
         },
-        
+
         -- Text objects
         textobjects = {
           select = {
