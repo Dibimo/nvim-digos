@@ -19,19 +19,7 @@ return {
   },
   --
   -- temas
-  {
-    "folke/tokyonight.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {},
-  },
-  {
-    "shaunsingh/nord.nvim",
-    options = {
-      theme = 'nord'
-    }
-  },
-  --fim temas
+ --fim temas
   --
   {
     "nvim-neo-tree/neo-tree.nvim",
