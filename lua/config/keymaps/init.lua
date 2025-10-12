@@ -6,4 +6,5 @@ require("config.keymaps.navigation")
 require("config.keymaps.telescope")
 require("config.keymaps.neo-tree")
 require("config.keymaps.sessions")
+require("config.keymaps.gitsings")
 
