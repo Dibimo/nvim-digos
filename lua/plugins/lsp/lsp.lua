@@ -1,6 +1,4 @@
--- ~/.config/nvim/lua/plugins/lsp.lua
 return {
-  -- Mason (Gerenciador de LSP servers)
   {
     "williamboman/mason.nvim",
     cmd = "Mason",
@@ -23,7 +21,6 @@ return {
     end,
   },
 
-  -- LSP Config (NOVA API do Neovim 0.11+)
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
@@ -71,152 +68,12 @@ return {
         end,
       })
 
-      vim.lsp.config('lua_ls', {
-        cmd = { 'lua-language-server' },
-        filetypes = { 'lua' },
-        root_markers = { '.luarc.json', '.luarc.jsonc', '.stylua.toml', '.git' },
-        settings = {
-          Lua = {
-            runtime = { version = "LuaJIT" },
-            diagnostics = { globals = { "vim" } },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-          },
-        },
-      })
-
-      -- Emmet Language Server
-      vim.lsp.config('emmet_language_server', {
-        cmd = { 'emmet-language-server', '--stdio' },
-        filetypes = {
-          'html',
-          'css',
-          'javascriptreact',
-          'typescriptreact',
-          'vue'
-        },
-        root_markers = { '.git', 'package.json' },
-      })
-
-      -- Python (Pyright)
-      vim.lsp.config('pyright', {
-        cmd = { 'pyright-langserver', '--stdio' },
-        filetypes = { 'python' },
-        root_markers = {
-          'pyproject.toml',
-          'setup.py',
-          'requirements.txt',
-          '.git'
-        },
-        settings = {
-          python = {
-            analysis = {
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-            }
-          }
-        }
-      })
-
-      -- TypeScript/JavaScript
-      vim.lsp.config('ts_ls', {
-        cmd = { 'typescript-language-server', '--stdio' },
-        filetypes = {
-          'javascript',
-          'javascriptreact',
-          'typescript',
-          'typescriptreact',
-          'vue'
-        },
-        root_markers = {
-          'tsconfig.json',
-          'jsconfig.json',
-          'package.json',
-          '.git'
-        },
-        init_options = {
-          plugins = {
-            {
-              name = "@vue/typescript-plugin",
-              location = vim.fn.stdpath('data') ..
-                '/mason/packages/vue-language-server/node_modules/@vue/language-server/node_modules/@vue/typescript-plugin',
-              languages = { "vue" }
-            }
-          }
-        }
-      })
-
-      -- HTML (precisa de snippet support)
-      local html_capabilities = vim.deepcopy(capabilities)
-      html_capabilities.textDocument.completion.completionItem.snippetSupport = true
-
-      vim.lsp.config('html', {
-        cmd = { 'vscode-html-language-server', '--stdio' },
-        filetypes = { 'html' },
-        root_markers = { 'package.json', '.git' },
-        capabilities = html_capabilities,
-        init_options = {
-          provideFormatter = true,
-        },
-      })
-
-      -- CSS (precisa de snippet support)
-      vim.lsp.config('cssls', {
-        cmd = { 'vscode-css-language-server', '--stdio' },
-        filetypes = { 'css', 'scss', 'less' },
-        root_markers = { 'package.json', '.git' },
-        capabilities = html_capabilities,
-        settings = {
-          css = { validate = true },
-          scss = { validate = true },
-          less = { validate = true },
-        },
-      })
-
-      -- JSON (precisa de snippet support)
-      vim.lsp.config('jsonls', {
-        cmd = { 'vscode-json-language-server', '--stdio' },
-        filetypes = { 'json', 'jsonc' },
-        root_markers = { 'package.json', '.git' },
-        capabilities = html_capabilities,
-        settings = {
-          json = {
-            validate = { enable = true },
-            format = { enable = true },
-          },
-        },
-      })
-
-      -- Bash
-      vim.lsp.config('bashls', {
-        cmd = { 'bash-language-server', 'start' },
-        filetypes = { 'sh', 'bash' },
-        root_markers = { '.git' },
-      })
-
-      vim.lsp.config("roslyn", {
-        on_attach = function()
-          print("This will run when the server attaches!")
-        end,
-        settings = {
-          ["csharp|inlay_hints"] = {
-            csharp_enable_inlay_hints_for_implicit_object_creation = true,
-            csharp_enable_inlay_hints_for_implicit_variable_types = true,
-          },
-          ["csharp|code_lens"] = {
-            dotnet_enable_references_code_lens = true,
-          },
-        },
-      })
-
-      vim.lsp.config('vue_ls', {
-        cmd = { 'vue-language-server', '--stdio' },
-        filetypes = { 'vue' },
-        root_markers = { 'package.json' },
-      })
+      require("plugins.lsp.servers.lua")
+      require("plugins.lsp.servers.web")
+      require("plugins.lsp.servers.javascript")
+      require("plugins.lsp.servers.python")
+      require("plugins.lsp.servers.csharp")
+      require("plugins.lsp.servers.bash")
 
       vim.lsp.enable({
         'lua_ls',
@@ -227,8 +84,7 @@ return {
         'cssls',
         'jsonls',
         'bashls',
-        'omnisharp',
-        'vue-language-server',
+        'roslyn',
         'vue_ls'
       })
 
