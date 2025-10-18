@@ -29,7 +29,13 @@ opt.timeoutlen = 500
 opt.ttimeout = true
 opt.ttimeoutlen = 0
 
--- Remover espaços em branco a direita 
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+opt.foldlevelstart = 2
+opt.foldtext = ""
+
+
+-- Remover espaços em branco a direita
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern="*",
   command="%s/\\s\\+$//e",
