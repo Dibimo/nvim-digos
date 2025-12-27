@@ -20,5 +20,6 @@ return {
       vim.cmd([[colorscheme visual_studio_code]])
     end,
   },
+  { "savq/melange-nvim" }
 }
 
