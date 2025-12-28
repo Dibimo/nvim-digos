@@ -11,12 +11,7 @@ keymap("n", "<leader>s?", "z=", { desc = "Spelling suggestions" })
 
 
 
--- Copiar para clipboard do sistema (modo visual)
 keymap("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
-
--- Colar da clipboard do sistema (modo normal e insert)
 keymap("n", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
 keymap("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
-
--- Cortar para clipboard do sistema (modo visual)
 keymap("v", "<C-x>", '"+d', { desc = "Cut to system clipboard" })
