@@ -7,4 +7,5 @@ require("config.keymaps.telescope")
 require("config.keymaps.neo-tree")
 require("config.keymaps.sessions")
 require("config.keymaps.gitsings")
+require("config.keymaps.spell")
 
