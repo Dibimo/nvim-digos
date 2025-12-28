@@ -61,8 +61,6 @@ end
 -- vim.g.neovide_opacity = 0.88
 -- vim.g.transparency = 0.70
 
-
-
 -- local change_transparency = function(delta)
 --   vim.g.neovide_opacity_point = vim.g.neovide_opacity_point + delta
 --   vim.g.neovide_background_color = "#0f1117" .. alpha()
@@ -76,3 +74,5 @@ end
 -- vim.keymap.set({ "n", "v", "o" }, "<D-[>", function()
 --   change_transparency(-0.01)
 -- end)
+
+
