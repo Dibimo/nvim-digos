@@ -2,19 +2,17 @@ local M = {}
 
 function M.get_line_number()
   local line = vim.v.lnum
-  local current = vim.fn.line('.')
-  local relative = line - current
+  local relnum = vim.v.relnum
 
   local number_part = ""
 
-  if relative == 0 then
+  if relnum == 0 then
     number_part = string.format('%4d', line)
   else
-    local abs_relative = math.abs(relative)
-    local key = relative > 0 and "j" or "k"
-    local hl = relative > 0 and "DiagnosticInfo" or "DiagnosticHint"
+    local key = vim.v.lnum > vim.fn.line('.') and "j" or "k"
+    local hl = vim.v.lnum > vim.fn.line('.') and "DiagnosticInfo" or "DiagnosticHint"
 
-    number_part = string.format("%%#%s#%4d%s", hl, abs_relative, key)
+    number_part = string.format("%%#%s#%4d%s", hl, relnum, key)
   end
   return "%s" .. number_part .. " "
 end
