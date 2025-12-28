@@ -62,7 +62,7 @@ return {
           end, opts)
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
-          if client.supports_method('textDocument/inlayHint') then
+          if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
           end
         end,
