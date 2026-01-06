@@ -1,0 +1,22 @@
+return {}
+-- return {
+--   {
+--     "relative-keys",
+--     dir = vim.fn.stdpath("config") .. "/lua/custom/relative-keys/relative-keys",
+--     config = function()
+--       local function relative_number_with_key()
+--         local current_line = vim.fn.line('.')
+--         local total_lines = vim.fn.line('$')
+--         vim.wo.statuscolumn = [[%!v:lua.require'custom.relative-keys'.get_line_number()]]
+--       end
+--
+--       vim.api.nvim_create_autocmd({"BufEnter", "WinEnter"}, {
+--         callback = function()
+--           if vim.wo.relativenumber then
+--             relative_number_with_key()
+--           end
+--         end
+--       })
+--     end
+--   }
+-- }

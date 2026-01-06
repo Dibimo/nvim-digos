@@ -62,7 +62,7 @@ return {
           end, opts)
           vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
 
-          if client.supports_method('textDocument/inlayHint') then
+          if client.server_capabilities.inlayHintProvider then
             vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
           end
         end,
@@ -92,7 +92,15 @@ return {
         virtual_text = {
           prefix = "●",
         },
-        signs = true,
+
+        signs = {
+          text = {
+            [vim.diagnostic.severity.ERROR] = " ",
+            [vim.diagnostic.severity.WARN] = " ",
+            [vim.diagnostic.severity.HINT] = "󰌶 ",
+            [vim.diagnostic.severity.INFO] = " ",
+          },
+        },
         underline = true,
         update_in_insert = false,
         float = {
@@ -102,17 +110,6 @@ return {
         },
       })
 
-      -- Ícones dos diagnósticos
-      local signs = {
-        Error = " ",
-        Warn = " ",
-        Hint = "󰌶 ",
-        Info = " "
-      }
-      for type, icon in pairs(signs) do
-        local hl = "DiagnosticSign" .. type
-        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-      end
     end,
   },
 }
