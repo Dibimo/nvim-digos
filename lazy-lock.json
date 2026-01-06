@@ -34,5 +34,6 @@
   "render-markdown.nvim": { "branch": "main", "commit": "bfd67f1402b97ac619cb538f4bbaed12a7fa89aa" },
   "telescope.nvim": { "branch": "master", "commit": "a0bbec21143c7bc5f8bb02e0005fa0b982edc026" },
   "tokyonight.nvim": { "branch": "main", "commit": "4fe1b0c44f5d6ee769cdfbdffc7ccb703f53feda" },
+  "typst.vim": { "branch": "main", "commit": "1d5436c0f55490893892441c0eca55e6cdf4916c" },
   "vim-spell-pt-br": { "branch": "master", "commit": "3d7eb3098de77b86c8a880354b442b3d84b18a72" }
 }
