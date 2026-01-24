@@ -9,7 +9,7 @@ function M.get_line_number()
   if relnum == 0 then
     number_part = string.format('%4d', line)
   else
-    local key = vim.v.lnum > vim.fn.line('.') and "j" or "k"
+    local key = vim.v.lnum > vim.fn.line('.') and "" or ""
     local hl = vim.v.lnum > vim.fn.line('.') and "DiagnosticInfo" or "DiagnosticHint"
 
     number_part = string.format("%%#%s#%4d%s", hl, relnum, key)
