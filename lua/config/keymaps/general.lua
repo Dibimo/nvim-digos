@@ -5,6 +5,8 @@ keymap("n", "B", "^", { desc = "Pula para o começo da linha. É só o ^ remapea
 keymap("n", "E", "$", { desc = "Pula para o final da linha. É só o $ remapeado" })
 
 keymap("n", "<leader>fs", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
+keymap("n", "çç", "<cmd>w<cr>", { desc = "Salva o meu arquivo atual" })
+keymap("n", "ÇÇ", "<cmd>wall<cr>", { desc = "Salva o meu arquivo atual" })
 keymap("n", "<leader>wa", "<cmd>wa<cr> ", { desc = "Salva o meu arquivo atual" })
 keymap("n", "<Esc>", "<cmd>nohlsearch<cr>", { desc = "Clear search highlight" })
 
