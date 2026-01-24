@@ -1,8 +1,8 @@
 return {
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
-      "williamboman/mason.nvim",
+      "mason-org/mason.nvim",
       "neovim/nvim-lspconfig",
     },
     opts = {
@@ -19,6 +19,10 @@ return {
         "vue_ls",
       },
 
+      registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+      },
       -- Habilita automaticamente os LSPs instalados
       automatic_enable = true,
     },
