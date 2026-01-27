@@ -15,3 +15,15 @@ keymap("v", "<C-c>", '"+y', { desc = "Copy to system clipboard" })
 keymap("n", "<C-v>", '"+p', { desc = "Paste from system clipboard" })
 keymap("i", "<C-v>", '<C-r>+', { desc = "Paste from system clipboard" })
 keymap("v", "<C-x>", '"+d', { desc = "Cut to system clipboard" })
+
+-- Copiar mensagem de diagnostic para clipboard
+keymap("n", "<leader>dy", function()
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+  if #diagnostics > 0 then
+    local message = diagnostics[1].message
+    vim.fn.setreg('+', message)
+    vim.notify('Diagnostic copiado para clipboard!', vim.log.levels.INFO)
+  else
+    vim.notify('Nenhum diagnostic nesta linha', vim.log.levels.WARN)
+  end
+end, { desc = "Copy diagnostic to clipboard" })
