@@ -72,7 +72,7 @@ return {
       require("plugins.lsp.servers.web")
       require("plugins.lsp.servers.javascript")
       require("plugins.lsp.servers.python")
-      require("plugins.lsp.servers.csharp")
+      -- require("plugins.lsp.servers.csharp")
       require("plugins.lsp.servers.bash")
 
       vim.lsp.enable({
@@ -84,7 +84,8 @@ return {
         'cssls',
         'jsonls',
         'bashls',
-        'roslyn',
+        'phpactor',
+        -- 'roslyn',
         'vue_ls'
       })
 
