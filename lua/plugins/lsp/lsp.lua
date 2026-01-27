@@ -110,6 +110,28 @@ return {
         },
       })
 
+      -- Fechar automaticamente após selecionar em quickfix ou location list
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "qf",
+        callback = function(event)
+          local opts = { buffer = event.buf, silent = true }
+
+          vim.keymap.set("n", "<CR>", function()
+            -- Detecta se é quickfix ou location list
+            local is_loclist = vim.fn.getloclist(0, {filewinid = 1}).filewinid ~= 0
+
+            if is_loclist then
+              local idx = vim.fn.getloclist(0, {idx = 0}).idx
+              vim.cmd("ll " .. idx)
+              vim.cmd("lclose")
+            else
+              local idx = vim.fn.getqflist({idx = 0}).idx
+              vim.cmd("cc " .. idx)
+              vim.cmd("cclose")
+            end
+          end, opts)
+        end,
+      })
     end,
   },
 }
