@@ -38,7 +38,7 @@ return {
 
         -- Comportamento
         always_show_bufferline = true,
-        sort_by = 'insert_after_current',
+        sort_by = 'id',
 
         -- INTEGRAÇÃO COM GITSIGNS
         -- Exibir indicadores de modificações do Git
