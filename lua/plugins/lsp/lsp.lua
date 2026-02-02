@@ -72,6 +72,7 @@ return {
       require("plugins.lsp.servers.web")
       require("plugins.lsp.servers.javascript")
       require("plugins.lsp.servers.python")
+      require("plugins.lsp.servers.php")
       -- require("plugins.lsp.servers.csharp")
       require("plugins.lsp.servers.bash")
 

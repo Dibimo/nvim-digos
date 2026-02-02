@@ -29,7 +29,8 @@ return {
           "regex",
           "gitignore",
           "dockerfile",
-          "c_sharp"
+          "c_sharp",
+          "php"
         },
 
         -- Instalar parsers automaticamente quando entrar em novo filetype

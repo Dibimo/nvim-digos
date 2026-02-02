@@ -17,6 +17,7 @@ return {
         "bashls",
         "emmet_language_server",
         "vue_ls",
+        "phpactor",
       },
 
       registries = {
