@@ -6,6 +6,13 @@ require("config.spell")
 require("config.aerial")
 require("config.relative-keys")
 
+require("mason").setup({
+    registries = {
+        "github:mason-org/mason-registry",
+        "github:Crashdummyy/mason-registry",
+    },
+})
+
 vim.cmd [[
   highlight Normal guibg=none
   highlight NonText guibg=none
