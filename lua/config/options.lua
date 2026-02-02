@@ -24,6 +24,9 @@ opt.wrap = false
 opt.termguicolors = true
 opt.mouse = "a"
 
+opt.title = true
+opt.titlestring = "%{fnamemodify(getcwd(), ':t')} - %t"
+
 opt.timeout = true
 opt.timeoutlen = 500
 opt.ttimeout = true

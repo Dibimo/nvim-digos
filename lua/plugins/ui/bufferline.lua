@@ -8,6 +8,29 @@ return {
   },
 
   config= function ()
+    -- Cache para status git dos arquivos
+    local git_status_cache = {}
+
+    -- Função para atualizar cache do git status
+    local function update_git_status()
+      git_status_cache = {}
+      local git_root = vim.fn.systemlist("git rev-parse --show-toplevel")[1]
+      if vim.v.shell_error ~= 0 then return end
+
+      local result = vim.fn.systemlist("git status --porcelain")
+      for _, line in ipairs(result) do
+        if line ~= "" then
+          local status = line:sub(1, 2)
+          local file = line:sub(4)
+          local full_path = git_root .. "/" .. file
+          git_status_cache[full_path] = status
+        end
+      end
+    end
+
+    -- Atualizar cache inicialmente
+    update_git_status()
+
     require("bufferline").setup({
       options = {
         -- Modo de exibição
@@ -21,6 +44,37 @@ return {
         diagnostics_indicator = function(count, level)
           local icon = level:match("error") and " " or " "
           return " " .. icon .. count
+        end,
+
+        -- Formatar nome do buffer com status git
+        name_formatter = function(buf)
+          local bufpath = vim.api.nvim_buf_get_name(buf.bufnr)
+          local git_status = git_status_cache[bufpath]
+          local status_text = ""
+
+          if git_status then
+            -- Mapear status do git para indicadores
+            local first_char = git_status:sub(1, 1)
+            local second_char = git_status:sub(2, 2)
+
+            if first_char == "?" and second_char == "?" then
+              status_text = " [??]"  -- Untracked
+            elseif first_char == "A" then
+              status_text = " [A]"   -- Added
+            elseif first_char == "M" or second_char == "M" then
+              status_text = " [M]"   -- Modified
+            elseif first_char == "D" or second_char == "D" then
+              status_text = " [D]"   -- Deleted
+            elseif first_char == "R" then
+              status_text = " [R]"   -- Renamed
+            elseif first_char == "C" then
+              status_text = " [C]"   -- Copied
+            elseif first_char == "U" then
+              status_text = " [U]"   -- Updated but unmerged
+            end
+          end
+
+          return buf.name .. status_text
         end,
 
         -- Separadores
@@ -100,6 +154,23 @@ return {
           fg = '#f99157',
         },
       },
+    })
+
+    -- Atualizar cache do git status quando houver mudanças
+    vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "FocusGained" }, {
+      callback = function()
+        update_git_status()
+        vim.cmd('redrawtabline')
+      end,
+    })
+
+    -- Atualizar quando gitsigns atualizar
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "GitSignsUpdate",
+      callback = function()
+        update_git_status()
+        vim.cmd('redrawtabline')
+      end,
     })
   end
 }
